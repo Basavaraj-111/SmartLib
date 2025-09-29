@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SmartLIB</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.5)50%, rgba(0,0,0,0.5)50%), url(photo.jpg);
+            background-position: center;
+            background-size: cover;
+            height: 100vh;
+        }
+
+        .navbar {
+            width: 1200px;
+            height: 75px;
+            margin: auto;
+        }
+
+        .icon {
+            width: 200px;
+            float: left;
+            height: 70px;
+        }
+
+        .logo {
+            color: #ff7200;
+            font-size: 35px;
+            font-family: Arial;
+            padding-left: 20px;
+            float: left;
+            padding-top: 10px;
+            margin-top: 5px;
+        }
+
+        .content {
+            width: 1200px;
+            height: auto;
+            margin: auto;
+            color: #fff;
+            position: relative;
+        }
+
+        footer {
+            font-family: 'Times New Roman';  
+            background-color: #444;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Chatbot styles */
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff7200;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        .chat-box {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+        }
+
+        .chat-box-header {
+            background-color: #ff7200;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+        }
+
+        .chat-box-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            max-height: 200px;
+        }
+
+        .chat-box-input {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        .chat-box-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+
+        .chat-box-input button {
+            padding: 10px;
+            border: none;
+            background-color: #ff7200;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main">
+    <div class="navbar">
+        <div class="icon">
+            <h2 class="logo">SmartLIB</h2>
+        </div>
+    </div> 
+</div>
+<footer>
+    <p>&copy; 2024 Library Management Website. All rights reserved.</p>
+</footer>
+
+<!-- Chatbot button -->
+<button class="chatbot" onclick="toggleChat()">💬</button>
+
+<!-- Chatbox -->
+<div class="chat-box" id="chatBox">
+    <div class="chat-box-header">Chat with us!</div>
+    <div class="chat-box-messages" id="chatMessages"></div>
+    <div class="chat-box-input">
+        <input type="text" id="chatInput" placeholder="Type a message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    const responses = {
+        "hello": "Hi there! How can I assist you today?",
+        "what is SmartLIB?": "SmartLIB is a smart library management system designed to streamline your library operations.",
+        "how do I login?": "To log in, click the login button and use your credentials.",
+        "bye": "Goodbye! Have a great day!",
+    };
+
+    function toggleChat() {
+        const chatBox = document.getElementById('chatBox');
+        chatBox.style.display = chatBox.style.display === 'none' || chatBox.style.display === '' ? 'flex' : 'none';
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const messages = document.getElementById('chatMessages');
+        const userMessage = input.value.trim();
+
+        if (userMessage) {
+            // Display user's message
+            const userDiv = document.createElement('div');
+            userDiv.textContent = `You: ${userMessage}`;
+            userDiv.style.textAlign = 'right';
+            userDiv.style.margin = '5px 0';
+            messages.appendChild(userDiv);
+
+            // Display bot's response
+            const botMessage = responses[userMessage.toLowerCase()] || "I'm sorry, I didn't understand that. Can you please rephrase?";
+            const botDiv = document.createElement('div');
+            botDiv.textContent = `Bot: ${botMessage}`;
+            botDiv.style.textAlign = 'left';
+            botDiv.style.margin = '5px 0';
+            messages.appendChild(botDiv);
+
+            // Scroll to the bottom of chat box
+            messages.scrollTop = messages.scrollHeight;
+            input.value = '';
+        }
+    }
+</script>
+</body>
+</html>
